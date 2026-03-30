@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Anganwadi MK Line</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="images/logo.jfif" type="image/jpeg" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a class="nav-brand" href="index.html">
+      <img class="nav-logo" src="images/logo.jfif" alt="Logo" />
+      <span class="nav-name">Anganwadi MK Line</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="academics.html">Academics</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <h1>Contact Us</h1>
+    <p>We'd love to hear from you. Get in touch with us anytime.</p>
+  </div>
+
+  <!-- CONTACT -->
+  <section>
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Info -->
+        <div class="contact-info">
+          <p class="section-label">Get In Touch</p>
+          <h2 class="section-title">We're Here for You</h2>
+          <p style="color:var(--muted); margin-bottom:2rem; line-height:1.75;">
+            Have questions about enrolment, our programmes, or daily activities? Feel free to visit us or send us a message.
+          </p>
+
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div class="contact-item-text">
+              <strong>Address</strong>
+              <span>MK Line, [Your Area/Ward], [Your District], Manipur</span>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">👩‍🏫</div>
+            <div class="contact-item-text">
+              <strong>Teacher</strong>
+              <span>A Vijay Laxmi</span>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">🤝</div>
+            <div class="contact-item-text">
+              <strong>Helper</strong>
+              <span>Punnya Kala</span>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">🕐</div>
+            <div class="contact-item-text">
+              <strong>School Hours</strong>
+              <span>Monday – Saturday: 8:00 AM – 12:00 PM</span>
+            </div>
+          </div>
+
+          <!-- Map placeholder -->
+          <div style="margin-top:1.5rem; border-radius:12px; overflow:hidden; border:1px solid var(--border); height:180px; background:var(--light-bg); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:0.9rem; text-align:center; padding:1rem;">
+            📍 MK Line, Manipur<br/>
+            <small style="opacity:0.7; display:block; margin-top:0.5rem;">Add your Google Maps embed here</small>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="contact-form">
+          <h3>Send Us a Message</h3>
+
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" placeholder="Enter your name" />
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="Enter your phone number" />
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" placeholder="What is this about?" />
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Write your message here…"></textarea>
+          </div>
+
+          <button class="btn btn-primary btn-full" onclick="sendMessage()">
+            Send Message
+          </button>
+
+          <div class="success-msg" id="contactSuccess">
+            ✅ Message sent! We'll get back to you soon.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <img class="footer-logo" src="images/logo.jfif" alt="Logo" />
+    <p class="footer-name">Anganwadi MK Line</p>
+    <p class="footer-staff">Teacher: A Vijay Laxmi &nbsp;|&nbsp; Helper: Punnya Kala</p>
+    <p class="footer-copy">&copy; <span id="year"></span> Anganwadi MK Line. All rights reserved.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function sendMessage() {
+      const name    = document.getElementById('name').value.trim();
+      const phone   = document.getElementById('phone').value.trim();
+      const subject = document.getElementById('subject').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (!name || !message) {
+        alert('Please enter your name and message.');
+        return;
+      }
+
+      // Opens WhatsApp with the message (replace the number with your own)
+      // Format: 91XXXXXXXXXX (country code + number, no +)
+      const phoneNumber = '91XXXXXXXXXX'; // ← Replace with your actual phone number
+      const text = encodeURIComponent(
+        `Name: ${name}\nPhone: ${phone}\nSubject: ${subject}\n\nMessage:\n${message}`
+      );
+      window.open(`https://wa.me/${phoneNumber}?text=${text}`, '_blank');
+
+      document.getElementById('contactSuccess').classList.add('show');
+      setTimeout(() => document.getElementById('contactSuccess').classList.remove('show'), 5000);
+    }
+  </script>
+</body>
+</html>

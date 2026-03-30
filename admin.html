@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Anganwadi MK Line</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="images/logo.jfif" type="image/jpeg" />
+</head>
+<body>
+
+  <!-- PASSWORD SCREEN -->
+  <div id="passwordScreen" class="admin-password-screen">
+    <div class="admin-login-card">
+      <img src="images/logo.jfif" alt="Logo" />
+      <h2>Admin Panel</h2>
+      <p>Anganwadi MK Line — Enter password to continue</p>
+      <div class="form-group">
+        <input type="password" id="pwdInput" placeholder="Enter admin password"
+          onkeydown="if(event.key==='Enter') checkPassword()" />
+      </div>
+      <button class="btn btn-primary btn-full" onclick="checkPassword()">Login</button>
+      <p class="admin-error" id="pwdError">❌ Incorrect password. Please try again.</p>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL (shown after login) -->
+  <div id="adminWrapper" class="admin-wrapper">
+
+    <div class="admin-topbar">
+      <h1>🏫 Admin Panel — Anganwadi MK Line</h1>
+      <span>Logged in as Admin</span>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- TABS -->
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchTab('events')">📅 Manage Events</button>
+        <button class="admin-tab" onclick="switchTab('gallery')">📷 Gallery Images</button>
+      </div>
+
+      <!-- ========================= EVENTS TAB ========================= -->
+      <div class="admin-panel active" id="tabEvents">
+
+        <!-- Add New Event -->
+        <div class="admin-card">
+          <h2>➕ Add New Event</h2>
+
+          <div class="form-group">
+            <label for="evtName">Event Name *</label>
+            <input type="text" id="evtName" placeholder="e.g. Annual Sports Day" />
+          </div>
+
+          <div class="form-group">
+            <label for="evtDate">Event Date *</label>
+            <input type="date" id="evtDate" />
+          </div>
+
+          <div class="form-group">
+            <label for="evtDesc">Description *</label>
+            <textarea id="evtDesc" placeholder="Describe the event…"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Event Image</label>
+            <div class="img-upload-area" id="evtImgArea" onclick="uploadEventImage()">
+              <div class="img-upload-placeholder" id="evtImgPlaceholder">
+                <span>🖼️</span>
+                <p>Click to upload event image</p>
+              </div>
+            </div>
+            <span class="img-upload-tag" id="evtImgTag"></span>
+            <input type="hidden" id="evtImgUrl" />
+          </div>
+
+          <button class="btn btn-primary" onclick="addEvent()">Save Event</button>
+          <div class="success-msg" id="evtSuccess">✅ Event added successfully!</div>
+        </div>
+
+        <!-- Existing Events -->
+        <div class="admin-card">
+          <h2>📋 Existing Events</h2>
+          <div id="eventList" class="event-list">
+            <div class="loading-msg"><div class="spinner"></div>Loading events…</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ========================= GALLERY TAB ========================= -->
+      <div class="admin-panel" id="tabGallery">
+
+        <!-- Upload Image -->
+        <div class="admin-card">
+          <h2>⬆️ Upload Gallery Image</h2>
+          <div class="img-upload-area" id="galImgArea" onclick="uploadGalleryImage()">
+            <div class="img-upload-placeholder" id="galImgPlaceholder">
+              <span>📷</span>
+              <p>Click to upload a photo</p>
+            </div>
+          </div>
+          <span class="img-upload-tag" id="galImgTag"></span>
+          <input type="hidden" id="galImgUrl" />
+          <br/>
+          <button class="btn btn-primary" onclick="saveGalleryImage()">Add to Gallery</button>
+          <div class="success-msg" id="galSuccess">✅ Image added to gallery!</div>
+        </div>
+
+        <!-- Gallery Images List -->
+        <div class="admin-card">
+          <h2>🖼️ All Gallery Images</h2>
+          <div id="galleryAdminGrid" class="gallery-admin-grid">
+            <div class="loading-msg" style="grid-column:1/-1;"><div class="spinner"></div>Loading…</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <!-- Cloudinary Upload Widget -->
+  <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+  <script src="js/config.js"></script>
+
+  <script>
+    // ---- Password ----
+    function checkPassword() {
+      const val = document.getElementById('pwdInput').value;
+      const err = document.getElementById('pwdError');
+      if (val === ADMIN_PASSWORD) {
+        document.getElementById('passwordScreen').style.display = 'none';
+        document.getElementById('adminWrapper').style.display = 'block';
+        loadEvents();
+        loadGalleryAdmin();
+      } else {
+        err.style.display = 'block';
+        document.getElementById('pwdInput').value = '';
+        setTimeout(() => err.style.display = 'none', 3000);
+      }
+    }
+
+    // ---- Tab switching ----
+    function switchTab(tab) {
+      document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+    }
+
+    // ---- Cloudinary Upload Helper ----
+    function openCloudinaryWidget(callback) {
+      cloudinary.openUploadWidget({
+        cloudName: CLOUDINARY_CLOUD_NAME,
+        uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+        sources: ['local', 'camera', 'url'],
+        multiple: false,
+        cropping: false,
+        resourceType: 'image',
+        styles: {
+          palette: {
+            window: '#FFFFFF', windowBorder: '#90A0B3',
+            tabIcon: '#2563eb', menuIcons: '#5A616A',
+            textDark: '#1e293b', textLight: '#FFFFFF',
+            link: '#2563eb', action: '#2563eb',
+            inactiveTabIcon: '#94a3b8', error: '#ef4444',
+            inProgress: '#2563eb', complete: '#22c55e', sourceBg: '#f0f6ff'
+          }
+        }
+      }, (error, result) => {
+        if (!error && result && result.event === 'success') {
+          callback(result.info.secure_url);
+        }
+      });
+    }
+
+    // ---- Event Image Upload ----
+    function uploadEventImage() {
+      openCloudinaryWidget((url) => {
+        document.getElementById('evtImgUrl').value = url;
+        document.getElementById('evtImgTag').textContent = '✅ Image uploaded!';
+
+        const area = document.getElementById('evtImgArea');
+        const placeholder = document.getElementById('evtImgPlaceholder');
+        let img = area.querySelector('img');
+        if (!img) {
+          img = document.createElement('img');
+          area.appendChild(img);
+        }
+        img.src = url;
+        placeholder.style.display = 'none';
+      });
+    }
+
+    // ---- Add Event to Firebase ----
+    async function addEvent() {
+      const name   = document.getElementById('evtName').value.trim();
+      const date   = document.getElementById('evtDate').value;
+      const desc   = document.getElementById('evtDesc').value.trim();
+      const imgUrl = document.getElementById('evtImgUrl').value;
+
+      if (!name || !date || !desc) {
+        alert('Please fill in Event Name, Date, and Description.');
+        return;
+      }
+
+      try {
+        await db.collection('events').add({
+          name,
+          date: new Date(date),
+          description: desc,
+          imageUrl: imgUrl || '',
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Reset form
+        document.getElementById('evtName').value = '';
+        document.getElementById('evtDate').value = '';
+        document.getElementById('evtDesc').value = '';
+        document.getElementById('evtImgUrl').value = '';
+        document.getElementById('evtImgTag').textContent = '';
+        const area = document.getElementById('evtImgArea');
+        const img = area.querySelector('img');
+        if (img) img.remove();
+        document.getElementById('evtImgPlaceholder').style.display = '';
+
+        const msg = document.getElementById('evtSuccess');
+        msg.classList.add('show');
+        setTimeout(() => msg.classList.remove('show'), 3000);
+
+        loadEvents();
+      } catch (err) {
+        console.error(err);
+        alert('Error saving event: ' + err.message);
+      }
+    }
+
+    // ---- Load Events in Admin ----
+    async function loadEvents() {
+      const list = document.getElementById('eventList');
+      list.innerHTML = '<div class="loading-msg"><div class="spinner"></div>Loading…</div>';
+      try {
+        const snapshot = await db.collection('events').orderBy('date', 'desc').get();
+        if (snapshot.empty) {
+          list.innerHTML = '<p style="color:var(--muted);padding:1rem;">No events added yet.</p>';
+          return;
+        }
+        let html = '';
+        snapshot.forEach(doc => {
+          const e = doc.data();
+          const dateStr = e.date
+            ? new Date(e.date.seconds * 1000).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })
+            : 'Date TBA';
+          const imgHtml = e.imageUrl
+            ? `<img class="event-list-img" src="${e.imageUrl}" alt="${e.name}" />`
+            : `<div class="event-list-img-placeholder">🎉</div>`;
+          html += `
+            <div class="event-list-item">
+              ${imgHtml}
+              <div class="event-list-info">
+                <div class="event-list-name">${e.name}</div>
+                <div class="event-list-date">📅 ${dateStr}</div>
+                <div style="color:var(--muted);font-size:0.82rem;margin-top:0.2rem;">${(e.description || '').substring(0,80)}${e.description && e.description.length > 80 ? '…' : ''}</div>
+              </div>
+              <button class="btn btn-danger" onclick="deleteEvent('${doc.id}')">🗑 Delete</button>
+            </div>`;
+        });
+        list.innerHTML = html;
+      } catch (err) {
+        list.innerHTML = '<p style="color:#ef4444;">Error loading events.</p>';
+        console.error(err);
+      }
+    }
+
+    // ---- Delete Event ----
+    async function deleteEvent(id) {
+      if (!confirm('Delete this event? This cannot be undone.')) return;
+      try {
+        await db.collection('events').doc(id).delete();
+        loadEvents();
+      } catch (err) {
+        alert('Error deleting event: ' + err.message);
+      }
+    }
+
+    // ---- Gallery Upload ----
+    function uploadGalleryImage() {
+      openCloudinaryWidget((url) => {
+        document.getElementById('galImgUrl').value = url;
+        document.getElementById('galImgTag').textContent = '✅ Image ready. Click "Add to Gallery" to save.';
+        const area = document.getElementById('galImgArea');
+        const placeholder = document.getElementById('galImgPlaceholder');
+        let img = area.querySelector('img');
+        if (!img) {
+          img = document.createElement('img');
+          area.appendChild(img);
+        }
+        img.src = url;
+        placeholder.style.display = 'none';
+      });
+    }
+
+    async function saveGalleryImage() {
+      const url = document.getElementById('galImgUrl').value;
+      if (!url) { alert('Please upload an image first.'); return; }
+      try {
+        await db.collection('gallery').add({
+          imageUrl: url,
+          uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        // Reset
+        document.getElementById('galImgUrl').value = '';
+        document.getElementById('galImgTag').textContent = '';
+        const area = document.getElementById('galImgArea');
+        const img = area.querySelector('img');
+        if (img) img.remove();
+        document.getElementById('galImgPlaceholder').style.display = '';
+
+        const msg = document.getElementById('galSuccess');
+        msg.classList.add('show');
+        setTimeout(() => msg.classList.remove('show'), 3000);
+        loadGalleryAdmin();
+      } catch (err) {
+        alert('Error saving image: ' + err.message);
+      }
+    }
+
+    // ---- Load Gallery in Admin ----
+    async function loadGalleryAdmin() {
+      const grid = document.getElementById('galleryAdminGrid');
+      grid.innerHTML = '<div class="loading-msg" style="grid-column:1/-1;"><div class="spinner"></div>Loading…</div>';
+      try {
+        const snapshot = await db.collection('gallery').orderBy('uploadedAt', 'desc').get();
+        if (snapshot.empty) {
+          grid.innerHTML = '<p style="color:var(--muted);padding:1rem;grid-column:1/-1;">No images yet.</p>';
+          return;
+        }
+        let html = '';
+        snapshot.forEach(doc => {
+          const item = doc.data();
+          html += `
+            <div class="gallery-admin-item">
+              <img src="${item.imageUrl}" alt="Gallery" loading="lazy" />
+              <button class="gallery-admin-delete" onclick="deleteGalleryImage('${doc.id}')" title="Delete">✕</button>
+            </div>`;
+        });
+        grid.innerHTML = html;
+      } catch (err) {
+        grid.innerHTML = '<p style="color:#ef4444;grid-column:1/-1;">Error loading gallery.</p>';
+      }
+    }
+
+    // ---- Delete Gallery Image ----
+    async function deleteGalleryImage(id) {
+      if (!confirm('Remove this photo from the gallery?')) return;
+      try {
+        await db.collection('gallery').doc(id).delete();
+        loadGalleryAdmin();
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>

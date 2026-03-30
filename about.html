@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Anganwadi MK Line</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="images/logo.jfif" type="image/jpeg" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a class="nav-brand" href="index.html">
+      <img class="nav-logo" src="images/logo.jfif" alt="Logo" />
+      <span class="nav-name">Anganwadi MK Line</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="academics.html">Academics</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <h1>About Us</h1>
+    <p>Dedicated to nurturing young minds in a safe, caring environment.</p>
+  </div>
+
+  <!-- ABOUT CONTENT -->
+  <section>
+    <div class="container">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; margin-bottom:4rem;">
+        <div>
+          <p class="section-label">Our Story</p>
+          <h2 class="section-title">Welcome to Anganwadi MK Line</h2>
+          <p style="color:var(--muted); line-height:1.8; margin-bottom:1rem;">
+            Anganwadi MK Line is a dedicated early childhood care and education centre committed to the holistic development of every child. We provide a warm, safe, and stimulating environment where children can learn, grow, and thrive.
+          </p>
+          <p style="color:var(--muted); line-height:1.8;">
+            Our centre is part of the national Integrated Child Development Services (ICDS) programme, ensuring quality care, nutrition support, and early learning for all children in our community.
+          </p>
+        </div>
+        <div style="background:var(--light-bg); border-radius:var(--radius); padding:2.5rem; border:1px solid var(--border);">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; text-align:center;">
+            <div>
+              <div style="font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--secondary); font-weight:700;">ICDS</div>
+              <div style="color:var(--muted); font-size:0.88rem; margin-top:0.25rem;">Programme</div>
+            </div>
+            <div>
+              <div style="font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--secondary); font-weight:700;">3–6</div>
+              <div style="color:var(--muted); font-size:0.88rem; margin-top:0.25rem;">Age Group (Years)</div>
+            </div>
+            <div>
+              <div style="font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--secondary); font-weight:700;">2</div>
+              <div style="color:var(--muted); font-size:0.88rem; margin-top:0.25rem;">Dedicated Staff</div>
+            </div>
+            <div>
+              <div style="font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--secondary); font-weight:700;">🏫</div>
+              <div style="color:var(--muted); font-size:0.88rem; margin-top:0.25rem;">Safe Environment</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MISSION & VISION -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:4rem;">
+        <div class="academic-card">
+          <div class="academic-icon">🎯</div>
+          <h3 class="academic-title">Our Mission</h3>
+          <p class="academic-desc">To provide quality early childhood education and care, ensuring every child gets the best start in life through play-based learning, nutrition, and health support.</p>
+        </div>
+        <div class="academic-card">
+          <div class="academic-icon">🌟</div>
+          <h3 class="academic-title">Our Vision</h3>
+          <p class="academic-desc">A community where every child is healthy, well-nourished, and ready to learn — empowered with skills to reach their full potential as they grow.</p>
+        </div>
+      </div>
+
+      <!-- STAFF -->
+      <div>
+        <p class="section-label">Our Team</p>
+        <h2 class="section-title">Meet Our Staff</h2>
+        <div class="staff-grid">
+
+          <div class="staff-card">
+            <div class="staff-avatar">AV</div>
+            <h3 class="staff-name">A Vijay Laxmi</h3>
+            <p class="staff-role">Anganwadi Teacher</p>
+            <p style="color:var(--muted); font-size:0.9rem; margin-top:1rem; line-height:1.6;">
+              Dedicated educator with a passion for early childhood development, guiding children through nurturing and play-based learning experiences.
+            </p>
+          </div>
+
+          <div class="staff-card">
+            <div class="staff-avatar" style="background:linear-gradient(135deg, #7c3aed, #a78bfa);">PK</div>
+            <h3 class="staff-name">Punnya Kala</h3>
+            <p class="staff-role">Anganwadi Helper</p>
+            <p style="color:var(--muted); font-size:0.9rem; margin-top:1rem; line-height:1.6;">
+              Committed to supporting children and staff in day-to-day activities, ensuring a clean, safe, and welcoming environment for all.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <img class="footer-logo" src="images/logo.jfif" alt="Logo" />
+    <p class="footer-name">Anganwadi MK Line</p>
+    <p class="footer-staff">Teacher: A Vijay Laxmi &nbsp;|&nbsp; Helper: Punnya Kala</p>
+    <p class="footer-copy">&copy; <span id="year"></span> Anganwadi MK Line. All rights reserved.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

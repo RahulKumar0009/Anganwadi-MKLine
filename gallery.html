@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — Anganwadi MK Line</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="images/logo.jfif" type="image/jpeg" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a class="nav-brand" href="index.html">
+      <img class="nav-logo" src="images/logo.jfif" alt="Logo" />
+      <span class="nav-name">Anganwadi MK Line</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="academics.html">Academics</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <h1>Gallery</h1>
+    <p>Moments and memories from our school activities and events.</p>
+  </div>
+
+  <!-- GALLERY -->
+  <section>
+    <div class="container">
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="loading-msg" style="grid-column:1/-1;"><div class="spinner"></div>Loading gallery…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <img id="lightboxImg" src="" alt="Gallery image" />
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <img class="footer-logo" src="images/logo.jfif" alt="Logo" />
+    <p class="footer-name">Anganwadi MK Line</p>
+    <p class="footer-staff">Teacher: A Vijay Laxmi &nbsp;|&nbsp; Helper: Punnya Kala</p>
+    <p class="footer-copy">&copy; <span id="year"></span> Anganwadi MK Line. All rights reserved.</p>
+  </footer>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Lightbox
+    const lightbox     = document.getElementById('lightbox');
+    const lightboxImg  = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    function openLightbox(src) {
+      lightboxImg.src = src;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    lightboxClose.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Load gallery from Firebase
+    async function loadGallery() {
+      const grid = document.getElementById('galleryGrid');
+      try {
+        const snapshot = await db.collection('gallery')
+          .orderBy('uploadedAt', 'desc')
+          .get();
+
+        if (snapshot.empty) {
+          grid.innerHTML = `
+            <div class="no-data" style="grid-column:1/-1;">
+              <span>📷</span>
+              <p>No photos uploaded yet. Check back soon!</p>
+            </div>`;
+          return;
+        }
+
+        let html = '';
+        snapshot.forEach(doc => {
+          const item = doc.data();
+          html += `
+            <div class="gallery-item" data-src="${item.imageUrl}">
+              <img src="${item.imageUrl}" alt="Gallery photo" loading="lazy" />
+              <div class="gallery-overlay">🔍</div>
+            </div>`;
+        });
+        grid.innerHTML = html;
+
+        grid.querySelectorAll('.gallery-item').forEach(item => {
+          item.addEventListener('click', () => openLightbox(item.dataset.src));
+        });
+
+      } catch (err) {
+        console.error(err);
+        grid.innerHTML = `<div class="no-data" style="grid-column:1/-1;"><span>⚠️</span><p>Could not load gallery. Please check Firebase config.</p></div>`;
+      }
+    }
+
+    loadGallery();
+  </script>
+</body>
+</html>

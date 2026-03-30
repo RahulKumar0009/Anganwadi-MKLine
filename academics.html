@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academics — Anganwadi MK Line</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="images/logo.jfif" type="image/jpeg" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a class="nav-brand" href="index.html">
+      <img class="nav-logo" src="images/logo.jfif" alt="Logo" />
+      <span class="nav-name">Anganwadi MK Line</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="academics.html">Academics</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <h1>Academics</h1>
+    <p>Holistic early learning programmes designed for every child's growth and development.</p>
+  </div>
+
+  <!-- ACADEMICS CONTENT -->
+  <section>
+    <div class="container">
+      <p class="section-label">What We Offer</p>
+      <h2 class="section-title">Our Learning Areas</h2>
+      <p class="section-subtitle" style="margin-bottom:1rem;">
+        Our curriculum focuses on the all-round development of children aged 3–6 years through play, creativity, and exploration.
+      </p>
+
+      <div class="academics-grid">
+
+        <div class="academic-card">
+          <div class="academic-icon">📚</div>
+          <h3 class="academic-title">Early Literacy</h3>
+          <p class="academic-desc">Introducing children to letters, sounds, and stories through fun and interactive storytelling, rhymes, and reading activities.</p>
+        </div>
+
+        <div class="academic-card">
+          <div class="academic-icon">🔢</div>
+          <h3 class="academic-title">Numeracy & Counting</h3>
+          <p class="academic-desc">Building number sense and basic math skills through games, blocks, sorting, and everyday counting activities.</p>
+        </div>
+
+        <div class="academic-card">
+          <div class="academic-icon">🎨</div>
+          <h3 class="academic-title">Art & Creativity</h3>
+          <p class="academic-desc">Encouraging self-expression through drawing, painting, craft, and music — fostering imagination and fine motor skills.</p>
+        </div>
+
+        <div class="academic-card">
+          <div class="academic-icon">🌿</div>
+          <h3 class="academic-title">Environmental Awareness</h3>
+          <p class="academic-desc">Teaching children about nature, plants, animals, and the environment through hands-on exploration and simple science activities.</p>
+        </div>
+
+        <div class="academic-card">
+          <div class="academic-icon">🤝</div>
+          <h3 class="academic-title">Social & Emotional Learning</h3>
+          <p class="academic-desc">Helping children build friendships, share, cooperate, and manage their feelings in a supportive group environment.</p>
+        </div>
+
+        <div class="academic-card">
+          <div class="academic-icon">🏃</div>
+          <h3 class="academic-title">Physical Development</h3>
+          <p class="academic-desc">Promoting gross and fine motor skills through outdoor play, exercises, dance, and engaging physical activities.</p>
+        </div>
+
+        <div class="academic-card">
+          <div class="academic-icon">🥗</div>
+          <h3 class="academic-title">Health & Nutrition</h3>
+          <p class="academic-desc">Providing nutritious meals and teaching children about hygiene, healthy habits, and the importance of a balanced diet.</p>
+        </div>
+
+        <div class="academic-card">
+          <div class="academic-icon">🎭</div>
+          <h3 class="academic-title">Cultural Activities</h3>
+          <p class="academic-desc">Celebrating festivals, local traditions, and cultural heritage through songs, dances, and community participation.</p>
+        </div>
+
+      </div>
+
+      <!-- Daily Schedule -->
+      <div style="margin-top:4rem;">
+        <p class="section-label">Daily Routine</p>
+        <h2 class="section-title">A Day at Anganwadi MK Line</h2>
+        <div style="margin-top:2rem; display:flex; flex-direction:column; gap:0; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;">
+          <div style="display:grid; grid-template-columns:130px 1fr; background:var(--primary); color:white; padding:1rem 1.5rem; font-weight:700; font-size:0.88rem; letter-spacing:1px; text-transform:uppercase;">
+            <span>Time</span><span>Activity</span>
+          </div>
+          <div id="scheduleRows"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <img class="footer-logo" src="images/logo.jfif" alt="Logo" />
+    <p class="footer-name">Anganwadi MK Line</p>
+    <p class="footer-staff">Teacher: A Vijay Laxmi &nbsp;|&nbsp; Helper: Punnya Kala</p>
+    <p class="footer-copy">&copy; <span id="year"></span> Anganwadi MK Line. All rights reserved.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const schedule = [
+      { time: '8:00 – 8:30 AM',  activity: '🌅 Morning Assembly & Prayer' },
+      { time: '8:30 – 9:00 AM',  activity: '🥗 Nutrition — Morning Snack' },
+      { time: '9:00 – 9:45 AM',  activity: '📚 Literacy & Numeracy Activities' },
+      { time: '9:45 – 10:30 AM', activity: '🎨 Art, Craft & Creative Play' },
+      { time: '10:30 – 11:00 AM',activity: '🏃 Outdoor Play & Physical Activity' },
+      { time: '11:00 – 11:30 AM',activity: '🍱 Meal Time — Hot Cooked Lunch (ICDS)' },
+      { time: '11:30 – 12:00 PM',activity: '🎭 Story Time, Songs & Cultural Activities' },
+      { time: '12:00 PM',         activity: '🏠 Dispersal & Home Time' },
+    ];
+
+    const rows = document.getElementById('scheduleRows');
+    schedule.forEach((item, i) => {
+      rows.innerHTML += `
+        <div style="display:grid; grid-template-columns:130px 1fr; padding:1rem 1.5rem;
+             border-top:1px solid var(--border); font-size:0.93rem;
+             background:${i % 2 === 0 ? 'var(--white)' : 'var(--off-white)'}">
+          <span style="color:var(--secondary); font-weight:700;">${item.time}</span>
+          <span style="color:var(--text);">${item.activity}</span>
+        </div>`;
+    });
+  </script>
+</body>
+</html>
