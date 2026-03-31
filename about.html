@@ -5,7 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us — Anganwadi MK Line</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="image.jpg" type="image/jpg" />
+  <link rel="icon" href="image.jpg" type="image/jpeg" />
+  <style>
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-bottom: 4rem;
+    }
+    .mv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .mv-grid    { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
@@ -34,7 +59,9 @@
   <!-- ABOUT CONTENT -->
   <section>
     <div class="container">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; margin-bottom:4rem;">
+
+      <!-- Story + Stats -->
+      <div class="about-grid">
         <div>
           <p class="section-label">Our Story</p>
           <h2 class="section-title">Welcome to Anganwadi MK Line</h2>
@@ -45,30 +72,30 @@
             Our centre is part of the national Integrated Child Development Services (ICDS) programme, ensuring quality care, nutrition support, and early learning for all children in our community.
           </p>
         </div>
-        <div style="background:var(--light-bg); border-radius:var(--radius); padding:2.5rem; border:1px solid var(--border);">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; text-align:center;">
+        <div style="background:var(--light-bg); border-radius:var(--radius); padding:2rem; border:1px solid var(--border);">
+          <div class="stats-grid">
             <div>
-              <div style="font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--secondary); font-weight:700;">ICDS</div>
-              <div style="color:var(--muted); font-size:0.88rem; margin-top:0.25rem;">Programme</div>
+              <div style="font-family:'Playfair Display',serif; font-size:2rem; color:var(--secondary); font-weight:700;">ICDS</div>
+              <div style="color:var(--muted); font-size:0.85rem; margin-top:0.25rem;">Programme</div>
             </div>
             <div>
-              <div style="font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--secondary); font-weight:700;">3–6</div>
-              <div style="color:var(--muted); font-size:0.88rem; margin-top:0.25rem;">Age Group (Years)</div>
+              <div style="font-family:'Playfair Display',serif; font-size:2rem; color:var(--secondary); font-weight:700;">3–6</div>
+              <div style="color:var(--muted); font-size:0.85rem; margin-top:0.25rem;">Age Group (Years)</div>
             </div>
             <div>
-              <div style="font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--secondary); font-weight:700;">2</div>
-              <div style="color:var(--muted); font-size:0.88rem; margin-top:0.25rem;">Dedicated Staff</div>
+              <div style="font-family:'Playfair Display',serif; font-size:2rem; color:var(--secondary); font-weight:700;">2</div>
+              <div style="color:var(--muted); font-size:0.85rem; margin-top:0.25rem;">Dedicated Staff</div>
             </div>
             <div>
-              <div style="font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--secondary); font-weight:700;">🏫</div>
-              <div style="color:var(--muted); font-size:0.88rem; margin-top:0.25rem;">Safe Environment</div>
+              <div style="font-size:2rem;">🏫</div>
+              <div style="color:var(--muted); font-size:0.85rem; margin-top:0.25rem;">Safe Environment</div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- MISSION & VISION -->
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:4rem;">
+      <div class="mv-grid">
         <div class="academic-card">
           <div class="academic-icon">🎯</div>
           <h3 class="academic-title">Our Mission</h3>
@@ -86,7 +113,6 @@
         <p class="section-label">Our Team</p>
         <h2 class="section-title">Meet Our Staff</h2>
         <div class="staff-grid">
-
           <div class="staff-card">
             <div class="staff-avatar">AV</div>
             <h3 class="staff-name">A Vijay Laxmi</h3>
@@ -95,7 +121,6 @@
               Dedicated educator with a passion for early childhood development, guiding children through nurturing and play-based learning experiences.
             </p>
           </div>
-
           <div class="staff-card">
             <div class="staff-avatar" style="background:linear-gradient(135deg, #7c3aed, #a78bfa);">PK</div>
             <h3 class="staff-name">Punnya Kala</h3>
@@ -104,9 +129,9 @@
               Committed to supporting children and staff in day-to-day activities, ensuring a clean, safe, and welcoming environment for all.
             </p>
           </div>
-
         </div>
       </div>
+
     </div>
   </section>
 
