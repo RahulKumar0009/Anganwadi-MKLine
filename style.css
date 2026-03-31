@@ -96,7 +96,7 @@ body {
 .hero-content { position: relative; max-width: 800px; animation: fadeUp 0.9s ease both; }
 .hero-logo {
   width: 90px; height: 90px; object-fit: contain;
-  margin-bottom: 1.5rem; filter: brightness(0) invert(1);
+  margin-bottom: 1.5rem; 
   animation: fadeDown 0.8s ease 0.2s both;
 }
 .hero h1 {
