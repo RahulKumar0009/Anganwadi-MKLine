@@ -29,7 +29,10 @@
 
     <div class="admin-topbar">
       <h1>🏫 Admin Panel — Anganwadi MK Line</h1>
-      <span>Logged in as Admin</span>
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <span>Logged in as Admin</span>
+        <button onclick="logout()" class="btn" style="background:rgba(255,255,255,0.15); color:white; font-size:0.85rem; padding:0.4rem 1rem;">🚪 Logout</button>
+      </div>
     </div>
 
     <div class="admin-content">
@@ -144,6 +147,13 @@
       }
     }
 
+    // ---- Logout ----
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        window.location.href = 'index.html';
+      }
+    }
+
     // ---- Tab switching ----
     function switchTab(tab) {
       document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -183,7 +193,6 @@
       openCloudinaryWidget((url) => {
         document.getElementById('evtImgUrl').value = url;
         document.getElementById('evtImgTag').textContent = '✅ Image uploaded!';
-
         const area = document.getElementById('evtImgArea');
         const placeholder = document.getElementById('evtImgPlaceholder');
         let img = area.querySelector('img');
