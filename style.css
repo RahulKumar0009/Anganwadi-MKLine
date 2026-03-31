@@ -94,11 +94,11 @@ body {
 .hero-shape:nth-child(3) { width: 100px; height: 100px; top: 30%; left: 10%; }
 
 .hero-content { position: relative; max-width: 800px; animation: fadeUp 0.9s ease both; }
-.hero-logo {
+/* .hero-logo {
   width: 90px; height: 90px; object-fit: contain;
   margin-bottom: 1.5rem; 
   animation: fadeDown 0.8s ease 0.2s both;
-}
+} */
 .hero h1 {
   font-family: 'Playfair Display', serif;
   font-size: clamp(2.2rem, 5vw, 3.8rem);
